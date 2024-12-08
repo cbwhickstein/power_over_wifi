@@ -1,0 +1,11 @@
+[1/9] Performing build step for 'bootloader'
+[1/1] cd /home/christian/Projects/current/power_over_wifi/build/bootloader/esp-idf/esptool_py && /home/christian/.espressif/python_env/idf5.3_py3.12_env/bin/python /home/christian/esp/esp-idf/components/partition_table/check_sizes.py --offset 0x8000 bootloader 0x1000 /home/christian/Projects/current/power_over_wifi/build/bootloader/bootloader.bin
+Bootloader binary size 0x6880 bytes. 0x780 bytes (7%) free.
+[2/9] No install step for 'bootloader'
+[3/9] Completed 'bootloader'
+[4/9] Building C object esp-idf/main/CMakeFiles/__idf_main.dir/main.c.obj
+/home/christian/Projects/current/power_over_wifi/main/main.c:26:18: warning: 'toggle_switch_handler' defined but not used [-Wunused-function]
+   26 | static esp_err_t toggle_switch_handler(httpd_req_t *req)
+      |                  ^~~~~~~~~~~~~~~~~~~~~
+[5/9] Linking C static library esp-idf/main/libmain.a
+[6/9] Generating ld/sections.ld

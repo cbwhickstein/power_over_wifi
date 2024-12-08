@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "esp_http_server.h": "c",
+        "freertos.h": "c",
+        "freertosconfig.h": "c"
+    }
+}

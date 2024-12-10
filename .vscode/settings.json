@@ -3,5 +3,6 @@
         "esp_http_server.h": "c",
         "freertos.h": "c",
         "freertosconfig.h": "c"
-    }
+    },
+    "C_Cpp.errorSquiggles": "disabled"
 }

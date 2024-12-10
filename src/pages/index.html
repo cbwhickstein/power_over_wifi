@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Power over WIFI</title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    </head>
+    <body style="background-color: rgba(91, 166, 224, 0.388);">
+        <div class="container">
+            <div class="row g-3">
+                <div class="col text-center text-decoration-underline fs-1">
+                    Startup
+                </div>
+            </div>
+
+            <div class="row g-10">
+                <div class="col text-center">
+                    <button onclick="startupRedirect()" id="startup-btn" class="btn p-3 shadow w-auto fs-1" style="background-color: rgba(255, 255, 255, 0.386);">Start PC</button>
+                </div>
+            </div>
+        </div>
+    </body>
+
+    <script>
+        function startupRedirect() {
+            window.location.href = "/startup.html"
+        }
+    </script>
+</html>

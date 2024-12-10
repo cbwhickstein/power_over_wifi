@@ -21,10 +21,16 @@
 
 #define EXAMPLE_HTTP_QUERY_KEY_MAX_LEN (64)
 
-static const char *TAG = "example";
+uint8_t is_on = 0;
 
+// handels the toggle of the switch and the /toggle_switch and / url
 static esp_err_t toggle_switch_handler(httpd_req_t *req)
 {
+    if (is_on == 1) {
+        httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
+        return ESP_OK;
+    }
+    
     const char *resp_str = "Pokemon";
     httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
     return ESP_OK;
@@ -32,6 +38,12 @@ static esp_err_t toggle_switch_handler(httpd_req_t *req)
 
 static const httpd_uri_t toggle_switch = {
     .uri = "/toggle_switch",
+    .method = HTTP_GET,
+    .handler = toggle_switch_handler,
+    .user_ctx = ""};
+
+static const httpd_uri_t home = {
+    .uri = "/",
     .method = HTTP_GET,
     .handler = toggle_switch_handler,
     .user_ctx = ""};

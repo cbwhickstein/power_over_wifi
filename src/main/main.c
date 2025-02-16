@@ -19,20 +19,16 @@
 #include "nvs_flash.h"
 #include "esp_eth.h"
 
+#include "pages.h"
+
 #define EXAMPLE_HTTP_QUERY_KEY_MAX_LEN (64)
 
-uint8_t is_on = 0;
+static const char* TAG = "example";
 
 // handels the toggle of the switch and the /toggle_switch and / url
 static esp_err_t toggle_switch_handler(httpd_req_t *req)
-{
-    if (is_on == 1) {
-        httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
-        return ESP_OK;
-    }
-    
-    const char *resp_str = "Pokemon";
-    httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
+{    
+    httpd_resp_send(req, (char*)homewebpage, HTTPD_RESP_USE_STRLEN);
     return ESP_OK;
 }
 
@@ -68,6 +64,7 @@ static httpd_handle_t start_webserver(void)
         // Set URI handlers
         ESP_LOGI(TAG, "Registering URI handlers");
         httpd_register_uri_handler(server, &toggle_switch);
+        httpd_register_uri_handler(server, &home);
         return server;
     }
 

@@ -8,6 +8,7 @@ This document concludes all the information to replicate this product.
 ```mermaid
 graph LR;
     user[User] --> |http| mcu[**ESP32-FreeRTOS** <br> -Website <br> -connection to PC];
+    user --> |physical| mcu
     mcu --> |GPIO| PC;
     user --> |ssh| PC;
 ```
@@ -19,10 +20,14 @@ stateDiagram
     direction LR
     [*] --> init
     init --> Webserver
-    Webserver --> Idle
-    Idle --> Webserver
-    init --> GPIO
-    Webserver --> GPIO
-    GPIO --> Webserver
+    init --> Power_On
+    Webserver --> Power_On
+    Power_On --> Webserver
+    init --> PC_Button_Detect
+    PC_Button_Detect --> Power_On
+    Power_On --> PC_Button_Detect
 ```
 
+## Schematic
+
+![POW Schematic](./images/schematic.png)

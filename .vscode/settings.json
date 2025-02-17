@@ -1,8 +1,7 @@
 {
     "files.associations": {
-        "esp_http_server.h": "c",
-        "freertos.h": "c",
-        "freertosconfig.h": "c"
+        "freertos.h": "c"
     },
-    "C_Cpp.errorSquiggles": "disabled"
+    "cmake.sourceDirectory": "/home/christian/Projects/current/power_over_wifi/code",
+    "C_Cpp.errorSquiggles": "enabled"
 }

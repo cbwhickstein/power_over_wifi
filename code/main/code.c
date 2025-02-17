@@ -1,0 +1,82 @@
+#include <stdio.h>
+#include <string.h>
+#include "esp_log.h"
+#include "esp_http_server.h"
+#include "esp_wifi.h"
+#include "esp_event.h"
+#include "nvs_flash.h"
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_netif.h"
+
+#define WIFI_SSID "ssid"
+#define WIFI_PASS "pw"
+
+static const char *TAG = "HTTP_SERVER";
+
+// HTTP request handler
+esp_err_t index_handler(httpd_req_t *req) {
+    const char *resp_str = "<html><head><title>ESP32 Web Server</title></head><body><h1>Hello from ESP32!</h1></body></html>";
+    httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
+    return ESP_OK;
+}
+
+// Start HTTP server
+httpd_handle_t start_server(void) {
+    httpd_config_t config = HTTPD_DEFAULT_CONFIG();
+    httpd_handle_t server = NULL;
+
+    if (httpd_start(&server, &config) == ESP_OK) {
+        httpd_uri_t index_page = {
+            .uri = "/",
+            .method = HTTP_GET,
+            .handler = index_handler,
+            .user_ctx = NULL
+        };
+        httpd_register_uri_handler(server, &index_page);
+    }
+    return server;
+}
+
+// Wi-Fi event handler
+static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+        esp_wifi_connect();
+    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+        start_server();
+        ESP_LOGI(TAG, "Server started at http://<ESP32_IP>");
+    }
+}
+
+// Initialize Wi-Fi
+void wifi_init(void) {
+    esp_netif_init();
+    esp_event_loop_create_default();
+    esp_netif_create_default_wifi_sta();
+
+    wifi_init_config_t cfg = WIFI_INIT_CONFIG_DEFAULT();
+    esp_wifi_init(&cfg);
+    esp_event_handler_instance_register(WIFI_EVENT, ESP_EVENT_ANY_ID, &wifi_event_handler, NULL, NULL);
+    esp_event_handler_instance_register(IP_EVENT, IP_EVENT_STA_GOT_IP, &wifi_event_handler, NULL, NULL);
+
+    wifi_config_t wifi_config = {
+        .sta = {
+            .ssid = WIFI_SSID,
+            .password = WIFI_PASS,
+        },
+    };
+
+    ESP_LOGI(TAG, WIFI_SSID);
+    ESP_LOGI(TAG, WIFI_PASS);
+    
+
+    esp_wifi_set_mode(WIFI_MODE_STA);
+    esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
+    esp_wifi_start();
+}
+
+// Main application
+void app_main(void) {
+    nvs_flash_init();
+    wifi_init();
+}

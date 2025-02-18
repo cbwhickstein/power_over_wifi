@@ -9,8 +9,7 @@
 #include "freertos/task.h"
 #include "esp_netif.h"
 
-#define WIFI_SSID "ssid"
-#define WIFI_PASS "pw"
+#include "include/wifi_config.h"
 
 static const char *TAG = "HTTP_SERVER";
 
@@ -65,9 +64,6 @@ void wifi_init(void) {
             .password = WIFI_PASS,
         },
     };
-
-    ESP_LOGI(TAG, WIFI_SSID);
-    ESP_LOGI(TAG, WIFI_PASS);
     
 
     esp_wifi_set_mode(WIFI_MODE_STA);

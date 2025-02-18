@@ -10,13 +10,19 @@
 #include "esp_netif.h"
 
 #include "include/wifi_config.h"
+#include "include/pages.h"
 
 static const char *TAG = "HTTP_SERVER";
 
-// HTTP request handler
+// HTTP index request handler
 esp_err_t index_handler(httpd_req_t *req) {
-    const char *resp_str = "<html><head><title>ESP32 Web Server</title></head><body><h1>Hello from ESP32!</h1></body></html>";
-    httpd_resp_send(req, resp_str, HTTPD_RESP_USE_STRLEN);
+    httpd_resp_send(req, index_page_html, HTTPD_RESP_USE_STRLEN);
+    return ESP_OK;
+}
+
+// HTTP gpio request handler
+esp_err_t gpio_handler(httpd_req_t *req) {
+    httpd_resp_send(req, gpio_page_html, HTTPD_RESP_USE_STRLEN);
     return ESP_OK;
 }
 
@@ -33,6 +39,14 @@ httpd_handle_t start_server(void) {
             .user_ctx = NULL
         };
         httpd_register_uri_handler(server, &index_page);
+
+        httpd_uri_t pow_page = {
+            .uri = "/pow_on",
+            .method = HTTP_GET,
+            .handler = gpio_handler,
+            .user_ctx = NULL
+        };
+        httpd_register_uri_handler(server, &pow_page);
     }
     return server;
 }

@@ -4,8 +4,10 @@
             "name": "Linux",
             "includePath": [
                 "${workspaceFolder}/**",
+                "${workspaceFolder}/code/main/include/",
                 "${workspaceFolder}/code/build/config/",
-                "/home/christian/esp/esp-idf/components/**"
+                "/home/christian/esp/esp-idf/components/**",
+                "/home/christian/esp/esp-idf/components/xtensa/include/xtensa/"
             ],
             "defines": [],
             "compilerPath": "/usr/bin/clang",

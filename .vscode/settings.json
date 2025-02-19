@@ -1,7 +1,10 @@
 {
     "files.associations": {
-        "freertos.h": "c"
+        "freertos.h": "c",
+        "wifi_config.h": "c",
+        "pages.h": "c",
+        "webserver.h": "c"
     },
     "cmake.sourceDirectory": "/home/christian/Projects/current/power_over_wifi/code",
-    "C_Cpp.errorSquiggles": "enabled"
+    "C_Cpp.errorSquiggles": "disabled"
 }

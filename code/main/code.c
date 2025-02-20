@@ -6,11 +6,18 @@
 #include <esp_log.h>
 
 #include "include/webserver.h"
+#include "include/gpio_controller.h"
+#include <main.h>
+
+
+void init(void) {
+    gpio_mutex = xSemaphoreCreateMutex();
+}
 
 // Main application
 void app_main(void) {
+    init();
     nvs_flash_init();
-    wifi_init();
-    
-
+    webserver_main();
+    gpio_main();
 }

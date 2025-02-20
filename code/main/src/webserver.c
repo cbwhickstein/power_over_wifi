@@ -7,9 +7,13 @@
 #include <esp_wifi.h>
 #include <esp_event.h>
 #include <esp_netif.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <freertos/semphr.h>
 
 #include <wifi_config.h>
 #include <pages.h>
+#include <main.h>
 
 static const char *TAG = "HTTP_SERVER";
 
@@ -22,6 +26,11 @@ esp_err_t index_handler(httpd_req_t *req) {
 // HTTP gpio request handler
 esp_err_t gpio_handler(httpd_req_t *req) {
     httpd_resp_send(req, gpio_page_html, HTTPD_RESP_USE_STRLEN);
+
+    xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100));
+    pow_should_trigger = 1;
+    xSemaphoreGive(gpio_mutex);   
+
     return ESP_OK;
 }
 
@@ -82,4 +91,8 @@ void wifi_init(void) {
     esp_wifi_set_mode(WIFI_MODE_STA);
     esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
     esp_wifi_start();
+}
+
+void webserver_main(void) {
+    wifi_init();
 }

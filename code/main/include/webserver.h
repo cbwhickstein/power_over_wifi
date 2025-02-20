@@ -1,3 +1,3 @@
 #pragma once
 
-void wifi_init(void);
+void webserver_main(void);

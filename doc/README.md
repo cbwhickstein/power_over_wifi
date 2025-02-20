@@ -23,7 +23,6 @@ stateDiagram
     init --> Power_On
     Webserver --> Power_On
     Power_On --> Webserver
-    init --> PC_Button_Detect
     PC_Button_Detect --> Power_On
     Power_On --> PC_Button_Detect
 ```

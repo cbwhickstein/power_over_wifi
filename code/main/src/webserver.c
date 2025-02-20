@@ -94,5 +94,7 @@ void wifi_init(void) {
 }
 
 void webserver_main(void) {
+    printf("Started webserver thread");
     wifi_init();
+    vTaskDelete(NULL);
 }

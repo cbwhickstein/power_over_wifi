@@ -18,6 +18,6 @@ void init(void) {
 void app_main(void) {
     init();
     nvs_flash_init();
-    webserver_main();
-    gpio_main();
+    xTaskCreate((TaskFunction_t) webserver_main, "webserver", 20480, NULL, 1, NULL);
+    xTaskCreate((TaskFunction_t) gpio_main, "pc_power", 20480, NULL, 1, NULL);
 }

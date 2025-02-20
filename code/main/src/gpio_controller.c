@@ -18,7 +18,7 @@ void init_gpio(void) {
     gpio_reset_pin(BUTTON_GPIO);
     
     gpio_set_direction(POW_GPIO, GPIO_MODE_OUTPUT);
-    gpio_set_direction(POW_GPIO, GPIO_MODE_INPUT);
+    gpio_set_direction(BUTTON_GPIO, GPIO_MODE_INPUT);
 
     gpio_set_pull_mode(BUTTON_GPIO, GPIO_PULLUP_ONLY);
 
@@ -30,10 +30,13 @@ void loop_gpio(void) {
         // Trigger the Power of the mainboard
         xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100));
         if (pow_should_trigger) {
+            pow_should_trigger = 0;
+
             xSemaphoreGive(gpio_mutex);
             gpio_set_level(POW_GPIO, POW_ON);
             vTaskDelay(pdMS_TO_TICKS(100));
             gpio_set_level(POW_GPIO, POW_OFF);
+            vTaskDelay(pdMS_TO_TICKS(100));
         }
         else {
             xSemaphoreGive(gpio_mutex);
@@ -46,11 +49,12 @@ void loop_gpio(void) {
             xSemaphoreGive(gpio_mutex);
         }
 
-        vTaskDelay(pdMS_TO_TICKS(10));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
 }
 
 void gpio_main(void) {
+    printf("Started PC Power Thread\n");
     init_gpio();
     loop_gpio();
 }

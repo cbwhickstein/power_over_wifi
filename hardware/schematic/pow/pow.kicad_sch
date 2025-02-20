@@ -1217,10 +1217,10 @@
 						)
 					)
 				)
-				(pin output line
+				(pin input line
 					(at -1.27 -13.97 90)
 					(length 2.54)
-					(name "3.3V"
+					(name "GND"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1235,7 +1235,7 @@
 						)
 					)
 				)
-				(pin output line
+				(pin bidirectional line
 					(at 1.27 -13.97 90)
 					(length 2.54)
 					(name "GPIO14"
@@ -1943,7 +1943,7 @@
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "c66d8e9e-e765-4892-8e7e-e5372188190d")
+		(uuid "953d7e44-20be-4551-9348-9713c9cf5e27")
 		(property "Reference" "U1"
 			(at 81.28 53.34 0)
 			(effects
@@ -1987,14 +1987,14 @@
 				(hide yes)
 			)
 		)
-		(pin "2"
-			(uuid "fb867795-9dce-4823-99e6-c6992f78b42d")
+		(pin "1"
+			(uuid "2f20a6f8-59ef-454f-8328-b00b418a3b6b")
 		)
 		(pin "3"
-			(uuid "c8a636fd-216d-42f4-bf83-a25cff329e93")
+			(uuid "849c6261-0820-46f8-8183-c64315fc64ed")
 		)
-		(pin "1"
-			(uuid "d0a6fa76-5cd0-4553-b4bd-0ce46d508d67")
+		(pin "2"
+			(uuid "61b755aa-27bd-4ead-9ae7-0616fd99a846")
 		)
 		(instances
 			(project ""

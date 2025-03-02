@@ -1036,6 +1036,126 @@
 				)
 			)
 		)
+		(symbol "power:+5V"
+			(power)
+			(pin_numbers hide)
+			(pin_names
+				(offset 0) hide)
+			(exclude_from_sim no)
+			(in_bom yes)
+			(on_board yes)
+			(property "Reference" "#PWR"
+				(at 0 -3.81 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Value" "+5V"
+				(at 0 3.556 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+				)
+			)
+			(property "Footprint" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Datasheet" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "Description" "Power symbol creates a global label with name \"+5V\""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "ki_keywords" "global power"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(symbol "+5V_0_1"
+				(polyline
+					(pts
+						(xy -0.762 1.27) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 0) (xy 0 2.54)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+				(polyline
+					(pts
+						(xy 0 2.54) (xy 0.762 1.27)
+					)
+					(stroke
+						(width 0)
+						(type default)
+					)
+					(fill
+						(type none)
+					)
+				)
+			)
+			(symbol "+5V_1_1"
+				(pin power_in line
+					(at 0 0 90)
+					(length 0)
+					(name "~"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "1"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+			)
+		)
 		(symbol "power:GND"
 			(power)
 			(pin_numbers hide)
@@ -1137,7 +1257,7 @@
 			(in_bom yes)
 			(on_board yes)
 			(property "Reference" "U"
-				(at 0 5.588 0)
+				(at 0.762 5.588 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1145,7 +1265,7 @@
 				)
 			)
 			(property "Value" ""
-				(at 0 0 0)
+				(at 3.81 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1153,7 +1273,7 @@
 				)
 			)
 			(property "Footprint" ""
-				(at 0 0 0)
+				(at 3.81 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1162,7 +1282,7 @@
 				)
 			)
 			(property "Datasheet" ""
-				(at 0 0 0)
+				(at 3.81 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1171,7 +1291,7 @@
 				)
 			)
 			(property "Description" ""
-				(at 0 0 0)
+				(at 3.81 0 0)
 				(effects
 					(font
 						(size 1.27 1.27)
@@ -1181,8 +1301,8 @@
 			)
 			(symbol "esp32_module_1_1"
 				(rectangle
-					(start -3.81 2.54)
-					(end 3.81 -11.43)
+					(start -6.35 2.54)
+					(end 7.62 -11.43)
 					(stroke
 						(width 0)
 						(type default)
@@ -1192,17 +1312,17 @@
 					)
 				)
 				(text "ESP32\n"
-					(at -0.254 3.556 0)
+					(at 0.508 3.556 0)
 					(effects
 						(font
 							(size 1.27 1.27)
 						)
 					)
 				)
-				(pin output line
-					(at 6.35 0 180)
+				(pin power_in line
+					(at -8.89 -2.54 0)
 					(length 2.54)
-					(name "GPIO13"
+					(name "5V"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1217,8 +1337,8 @@
 						)
 					)
 				)
-				(pin input line
-					(at -1.27 -13.97 90)
+				(pin power_out line
+					(at -8.89 -5.08 0)
 					(length 2.54)
 					(name "GND"
 						(effects
@@ -1235,8 +1355,26 @@
 						)
 					)
 				)
+				(pin input line
+					(at 2.54 -13.97 90)
+					(length 2.54)
+					(name "GND"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "3"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
 				(pin bidirectional line
-					(at 1.27 -13.97 90)
+					(at 5.08 -13.97 90)
 					(length 2.54)
 					(name "GPIO14"
 						(effects
@@ -1245,7 +1383,25 @@
 							)
 						)
 					)
-					(number "3"
+					(number "4"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+				)
+				(pin output line
+					(at 10.16 0 180)
+					(length 2.54)
+					(name "GPIO13"
+						(effects
+							(font
+								(size 1.27 1.27)
+							)
+						)
+					)
+					(number "5"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -1277,6 +1433,36 @@
 			(type default)
 		)
 		(uuid "130c1855-d67e-4407-b531-811ffecc90ca")
+	)
+	(wire
+		(pts
+			(xy 68.58 63.5) (xy 66.04 63.5)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "1a139a72-a07a-4afc-acc9-4ad4a90a68d6")
+	)
+	(wire
+		(pts
+			(xy 66.04 66.04) (xy 66.04 67.31)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "35de33f1-758e-4195-ab7c-a70cc3b2469d")
+	)
+	(wire
+		(pts
+			(xy 66.04 63.5) (xy 66.04 62.23)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "4a9ed618-8afa-4fe0-8235-ae8c8f54da2d")
 	)
 	(wire
 		(pts
@@ -1350,6 +1536,16 @@
 	)
 	(wire
 		(pts
+			(xy 68.58 66.04) (xy 66.04 66.04)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "992d1ffe-bcf7-4522-a354-225bd988c999")
+	)
+	(wire
+		(pts
 			(xy 101.6 52.07) (xy 101.6 60.96)
 		)
 		(stroke
@@ -1397,6 +1593,16 @@
 			(type default)
 		)
 		(uuid "e49a0d62-fb99-4193-bce7-6bb043119da6")
+	)
+	(text "JRAINBOW POW"
+		(exclude_from_sim no)
+		(at 62.738 64.516 90)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+		(uuid "2af7999b-efc5-4bbb-9564-dff5f6e65a48")
 	)
 	(symbol
 		(lib_id "Simulation_SPICE:NMOS")
@@ -1868,6 +2074,83 @@
 		)
 	)
 	(symbol
+		(lib_id "project_lib:esp32_module")
+		(at 77.47 60.96 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "8820f4ac-36e3-4fe2-a939-eecaec73065c")
+		(property "Reference" "U1"
+			(at 78.105 53.34 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Value" "~"
+			(at 78.105 54.61 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 81.28 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 81.28 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" ""
+			(at 81.28 60.96 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "2"
+			(uuid "f565df84-e07b-4633-b5dd-9f53156a03f2")
+		)
+		(pin "1"
+			(uuid "ede67930-fef4-4590-b6fb-c986da65731a")
+		)
+		(pin "5"
+			(uuid "2d309a37-48d5-4a33-ad70-951d3d92e977")
+		)
+		(pin "3"
+			(uuid "807398a6-c273-46af-870c-cda5ae100814")
+		)
+		(pin "4"
+			(uuid "44f580c0-3d24-4c85-b8cd-1a7e488c6398")
+		)
+		(instances
+			(project ""
+				(path "/4b642ee0-d255-4fcb-8e6f-376c5ec9f45d"
+					(reference "U1")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
 		(lib_id "Device:R")
 		(at 92.71 60.96 90)
 		(unit 1)
@@ -1935,25 +2218,26 @@
 		)
 	)
 	(symbol
-		(lib_id "project_lib:esp32_module")
-		(at 81.28 60.96 0)
+		(lib_id "power:GND")
+		(at 66.04 67.31 0)
 		(unit 1)
 		(exclude_from_sim no)
 		(in_bom yes)
 		(on_board yes)
 		(dnp no)
 		(fields_autoplaced yes)
-		(uuid "953d7e44-20be-4551-9348-9713c9cf5e27")
-		(property "Reference" "U1"
-			(at 81.28 53.34 0)
+		(uuid "af208a97-fb04-4fb5-896c-07b3dd3c7ecc")
+		(property "Reference" "#PWR03"
+			(at 66.04 73.66 0)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
+				(hide yes)
 			)
 		)
-		(property "Value" "~"
-			(at 81.28 54.61 0)
+		(property "Value" "GND"
+			(at 66.04 72.39 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1961,7 +2245,7 @@
 			)
 		)
 		(property "Footprint" ""
-			(at 81.28 60.96 0)
+			(at 66.04 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1970,7 +2254,7 @@
 			)
 		)
 		(property "Datasheet" ""
-			(at 81.28 60.96 0)
+			(at 66.04 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1978,8 +2262,8 @@
 				(hide yes)
 			)
 		)
-		(property "Description" ""
-			(at 81.28 60.96 0)
+		(property "Description" "Power symbol creates a global label with name \"GND\" , ground"
+			(at 66.04 67.31 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -1988,18 +2272,78 @@
 			)
 		)
 		(pin "1"
-			(uuid "2f20a6f8-59ef-454f-8328-b00b418a3b6b")
-		)
-		(pin "3"
-			(uuid "849c6261-0820-46f8-8183-c64315fc64ed")
-		)
-		(pin "2"
-			(uuid "61b755aa-27bd-4ead-9ae7-0616fd99a846")
+			(uuid "66ddd444-3747-4d54-a535-258115e027d8")
 		)
 		(instances
 			(project ""
 				(path "/4b642ee0-d255-4fcb-8e6f-376c5ec9f45d"
-					(reference "U1")
+					(reference "#PWR03")
+					(unit 1)
+				)
+			)
+		)
+	)
+	(symbol
+		(lib_id "power:+5V")
+		(at 66.04 62.23 0)
+		(unit 1)
+		(exclude_from_sim no)
+		(in_bom yes)
+		(on_board yes)
+		(dnp no)
+		(fields_autoplaced yes)
+		(uuid "d618edc0-5442-4618-ad5b-5da4f2789101")
+		(property "Reference" "#PWR02"
+			(at 66.04 66.04 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Value" "+5V"
+			(at 66.04 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+			)
+		)
+		(property "Footprint" ""
+			(at 66.04 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Datasheet" ""
+			(at 66.04 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "Description" "Power symbol creates a global label with name \"+5V\""
+			(at 66.04 62.23 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(pin "1"
+			(uuid "c4ae2d5d-9b28-4a51-ab6e-3562964e1ef1")
+		)
+		(instances
+			(project ""
+				(path "/4b642ee0-d255-4fcb-8e6f-376c5ec9f45d"
+					(reference "#PWR02")
 					(unit 1)
 				)
 			)

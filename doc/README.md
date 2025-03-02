@@ -30,3 +30,6 @@ stateDiagram
 ## Schematic
 
 ![POW Schematic](./images/schematic.png)
+
+## Measurements
+Pow_on+ to Pow_on- = 3.3V

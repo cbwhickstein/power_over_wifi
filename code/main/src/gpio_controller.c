@@ -34,9 +34,9 @@ void loop_gpio(void) {
 
             xSemaphoreGive(gpio_mutex);
             gpio_set_level(POW_GPIO, POW_ON);
-            vTaskDelay(pdMS_TO_TICKS(100));
+            vTaskDelay(pdMS_TO_TICKS(1000));
             gpio_set_level(POW_GPIO, POW_OFF);
-            vTaskDelay(pdMS_TO_TICKS(100));
+            vTaskDelay(pdMS_TO_TICKS(1000));
         }
         else {
             xSemaphoreGive(gpio_mutex);
@@ -57,4 +57,5 @@ void gpio_main(void) {
     printf("Started PC Power Thread\n");
     init_gpio();
     loop_gpio();
+    vTaskDelete(NULL);
 }

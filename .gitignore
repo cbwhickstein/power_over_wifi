@@ -2,4 +2,5 @@ sdkconfig
 build
 .vscode/
 .env
-
+doc/datasheets
+code/main/include/wifi_config.h

@@ -18,59 +18,71 @@
 static const char *TAG = "HTTP_SERVER";
 
 // HTTP index request handler
-esp_err_t index_handler(httpd_req_t *req) {
+esp_err_t index_handler(httpd_req_t *req)
+{
     httpd_resp_send(req, index_page_html, HTTPD_RESP_USE_STRLEN);
     return ESP_OK;
 }
 
 // HTTP gpio request handler
-esp_err_t gpio_handler(httpd_req_t *req) {
+esp_err_t gpio_handler(httpd_req_t *req)
+{
     httpd_resp_send(req, gpio_page_html, HTTPD_RESP_USE_STRLEN);
 
-    xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100));
-    pow_should_trigger = 1;
-    xSemaphoreGive(gpio_mutex);   
+    if (xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
+        pow_should_trigger = 1;
+        xSemaphoreGive(gpio_mutex);
+    }
 
     return ESP_OK;
 }
 
 // Start HTTP server
-httpd_handle_t start_server(void) {
+httpd_handle_t start_server(void)
+{
     httpd_config_t config = HTTPD_DEFAULT_CONFIG();
     httpd_handle_t server = NULL;
 
-    if (httpd_start(&server, &config) == ESP_OK) {
+    if (httpd_start(&server, &config) == ESP_OK)
+    {
         httpd_uri_t index_page = {
             .uri = "/",
             .method = HTTP_GET,
             .handler = index_handler,
-            .user_ctx = NULL
-        };
+            .user_ctx = NULL};
         httpd_register_uri_handler(server, &index_page);
 
         httpd_uri_t pow_page = {
             .uri = "/pow_on",
             .method = HTTP_GET,
             .handler = gpio_handler,
-            .user_ctx = NULL
-        };
+            .user_ctx = NULL};
         httpd_register_uri_handler(server, &pow_page);
+    }
+    else {
+        ESP_LOGE(TAG, "HTTP server failed, RESTARTING");
+        esp_restart();
     }
     return server;
 }
 
 // Wi-Fi event handler
-static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data) {
-    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START) {
+static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t event_id, void *event_data)
+{
+    if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START)
+    {
         esp_wifi_connect();
-    } else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP) {
+    }
+    else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP)
+    {
         start_server();
         ESP_LOGI(TAG, "Server started at http://<ESP32_IP>");
     }
 }
 
 // Initialize Wi-Fi
-void wifi_init(void) {
+void wifi_init(void)
+{
     esp_netif_init();
     esp_event_loop_create_default();
     esp_netif_create_default_wifi_sta();
@@ -86,15 +98,15 @@ void wifi_init(void) {
             .password = WIFI_PASS,
         },
     };
-    
 
     esp_wifi_set_mode(WIFI_MODE_STA);
     esp_wifi_set_config(WIFI_IF_STA, &wifi_config);
     esp_wifi_start();
 }
 
-void webserver_main(void) {
-    printf("Started webserver thread");
+void webserver_main(void)
+{
+    ESP_LOGI(TAG, "Webserver Thread Started!");
     wifi_init();
     vTaskDelete(NULL);
 }

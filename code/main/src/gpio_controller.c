@@ -28,24 +28,23 @@ void init_gpio(void) {
 void loop_gpio(void) {
     while(1) {
         // Trigger the Power of the mainboard
-        xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100));
-        if (pow_should_trigger) {
-            pow_should_trigger = 0;
-
-            xSemaphoreGive(gpio_mutex);
-            gpio_set_level(POW_GPIO, POW_ON);
-            vTaskDelay(pdMS_TO_TICKS(1000));
-            gpio_set_level(POW_GPIO, POW_OFF);
-            vTaskDelay(pdMS_TO_TICKS(1000));
-        }
-        else {
+        if (xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
+            if (pow_should_trigger) {
+                pow_should_trigger = 0;
+                gpio_set_level(POW_GPIO, POW_ON);
+                vTaskDelay(pdMS_TO_TICKS(1000));
+                gpio_set_level(POW_GPIO, POW_OFF);
+                vTaskDelay(pdMS_TO_TICKS(1000));
+            }
             xSemaphoreGive(gpio_mutex);
         }
 
         // Get the input of the PC Button
-        if (gpio_get_level(BUTTON_GPIO) == 0) {
-            xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100));
-            pow_should_trigger = 1;
+        if (xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100)) == pdTRUE) {
+            if (gpio_get_level(BUTTON_GPIO) == 0) {
+                xSemaphoreTake(gpio_mutex, pdMS_TO_TICKS(100));
+                pow_should_trigger = 1;
+            }
             xSemaphoreGive(gpio_mutex);
         }
 

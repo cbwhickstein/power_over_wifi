@@ -10,12 +10,16 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 #include <freertos/semphr.h>
+#include <stdatomic.h>
 
 #include <wifi_config.h>
 #include <pages.h>
 #include <main.h>
 
 static const char *TAG = "HTTP_SERVER";
+static EventGroupHandle_t wifi_event_group;
+const int WIFI_CONNECTED_BIT = BIT0;
+int disconnect_counter = 0;
 
 // HTTP index request handler
 esp_err_t index_handler(httpd_req_t *req)
@@ -34,6 +38,20 @@ esp_err_t gpio_handler(httpd_req_t *req)
         xSemaphoreGive(gpio_mutex);
     }
 
+    return ESP_OK;
+}
+
+// HTTP disconnect Counter
+esp_err_t disconnect_handler(httpd_req_t *req) 
+{
+    char buf[32];    
+    int val = atomic_load(&disconnect_counter);    
+    int len = snprintf(buf, sizeof(buf), "%d", val);
+
+    // set content type (text/plain or application/json)    
+    httpd_resp_set_type(req, "text/plain");    
+    httpd_resp_set_status(req, "200 OK");    
+    httpd_resp_send(req, buf, len);    
     return ESP_OK;
 }
 
@@ -58,6 +76,13 @@ httpd_handle_t start_server(void)
             .handler = gpio_handler,
             .user_ctx = NULL};
         httpd_register_uri_handler(server, &pow_page);
+
+        httpd_uri_t disconnected_page = {
+            .uri = "/disconnected",
+            .method = HTTP_GET,
+            .handler = disconnect_handler,
+            .user_ctx = NULL};
+        httpd_register_uri_handler(server, &disconnected_page);
     }
     else {
         ESP_LOGE(TAG, "HTTP server failed, RESTARTING");
@@ -72,6 +97,12 @@ static void wifi_event_handler(void *arg, esp_event_base_t event_base, int32_t e
     if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_START)
     {
         esp_wifi_connect();
+    }
+    else if (event_base == WIFI_EVENT && event_id == WIFI_EVENT_STA_DISCONNECTED) {        
+        xEventGroupClearBits(wifi_event_group, WIFI_CONNECTED_BIT);        
+        ESP_LOGI(TAG, "Disconnected, reconnecting...");      
+        disconnect_counter++;  
+        esp_wifi_connect(); // auto-reconnect    
     }
     else if (event_base == IP_EVENT && event_id == IP_EVENT_STA_GOT_IP)
     {
